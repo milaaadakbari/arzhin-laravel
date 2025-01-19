@@ -10,4 +10,3 @@ Route::resource('users', UserController::class);
 Route::fallback(function (){
     return view('admin.errors.404');
 });
-Route::get('milad',UserController::class,'reza');

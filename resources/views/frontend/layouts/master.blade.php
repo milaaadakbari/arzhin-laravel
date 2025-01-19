@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{url('frontend/css/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{url('frontend/css/owl.theme.default.css')}}">
     <link rel="stylesheet" href="{{url('frontend/css/style.css')}}">
-    <title>قالب وبلاگ سئو 90</title>
+    <title>قالب اصلی</title>
 </head>
 <body>
 <header>
