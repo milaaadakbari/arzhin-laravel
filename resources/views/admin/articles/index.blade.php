@@ -17,40 +17,45 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="text-center align-middle text-primary">ردیف</th>
-                            <th class="text-center align-middle text-primary">نام دسته بندی</th>
-                            <th class="text-center align-middle text-primary">دسته پدر</th>
+                            <th class="text-center align-middle text-primary">عکس</th>
+                            <th class="text-center align-middle text-primary">عنوان مقاله</th>
+                            <th class="text-center align-middle text-primary">نویسنده</th>
+                            <th class="text-center align-middle text-primary">دسته بندی</th>
                             <th class="text-center align-middle text-primary">ویرایش</th>
                             <th class="text-center align-middle text-primary">حذف</th>
-                            <th class="text-center align-middle text-primary">حذف ایجکسی</th>
                             <th class="text-center align-middle text-primary">تاریخ ایجاد</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $index => $category)
+                        @foreach($articles as $index => $article)
                             <tr>
-                                <td class="text-center align-middle">{{$categories->firstItem() + $index}}</td>
-                                <td class="text-center align-middle">{{$category->title}}</td>
-                                <td class="text-center align-middle">{{$category->parentCategory->title}}</td>
+                                <td class="text-center align-middle">{{$articles->firstItem()+$index}}</td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-outline-info" href="{{route('categories.edit',$category->id)}}">
+                                    <figure class="avatar avatar">
+                                        <img src="{{url('images/articles')}}" class="rounded-circle" alt="image">
+                                    </figure>
+                                </td>
+                                <td class="text-center align-middle">{{$article->title}}</td>
+                                <td class="text-center align-middle">{{$article->user->name}}</td>
+                                <td class="text-center align-middle">{{$article->category->title}}</td>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-outline-info" href="#">
+                                        نقش های کاربر
+                                    </a>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-outline-info" href="{{route('articles.edit',$article->id)}}">
                                         ویرایش
                                     </a>
-                                </td>
                                 <td class="text-center align-middle">
-                                    <form action="{{route('categories.destroy',$category->id)}}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-outline-danger">حذف</button>
-                                    </form>
-
-                                </td>
-                                <td class="text-center align-middle">
-                                    <a class="btn btn-outline-info" onclick="deleteCategory({{$category->id}})" href="#">
-                                        حذف ایجکسی
+                                    <a class="btn btn-outline-info" onclick="deleteArticle({{$article->id}})" href="#">
+                                        حذف
                                     </a>
 
                                 </td>
-                                <td class="text-center align-middle">{{\Hekmatinasser\Verta\Verta::instance($category->created_at)->format('%B %d، %Y')}}</td>
+
+                                </td>
+                                <td class="text-center align-middle">{{\Hekmatinasser\Verta\Verta::instance($article->created_at)->format('%B %d، %Y')}}</td>
                             </tr>
                         @endforeach
 
@@ -58,7 +63,7 @@
                     </table>
                     <div style="margin: 40px !important;"
                          class="pagination pagination-rounded pagination-sm d-flex justify-content-center">
-                        {{$categories->links()}}
+                        {{$articles->links()}}
                     </div>
                 </div>
             </div>
@@ -66,7 +71,6 @@
     </main>
 
 @endsection
-
 @push('scripts')
     <script>
 
@@ -76,7 +80,7 @@
             }
         });
 
-        function deleteCategory($id){
+        function deleteArticle($id){
             Swal.fire({
                 title: "آیا از حذف مطمئن هستید",
                 icon: "warning",
@@ -88,12 +92,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/admin/categories/' + $id,
+                        url: 'http://127.0.0.1:8000/admin/articles/' + $id,
                         type: 'DELETE',
                         dataType: 'json',
                         success: function (data) {
                             Swal.fire({
-                                title: "دسته بندی حذف شد!",
+                                title: "مقاله حذف شد!",
                                 text: data.success,
                                 icon: "success"
                             });
@@ -106,3 +110,4 @@
         }
     </script>
 @endpush
+

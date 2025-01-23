@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title',
         'slug',
@@ -16,13 +17,46 @@ class Category extends Model
 
     public function parentCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id','id')->withDefault(['title'=>'دسته بندی']);
+        return $this->belongsTo(Category::class, 'parent_id', 'id')->withDefault(['title' => 'دسته بندی']);
     }
+
     public function childCategory(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Category::class, 'parent_id','id');
+        return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
 
+    protected static function getCategories()
+    {
+        parent::boot();
+        $array = [];
+        $categories = self::query()->with('childCategory')->where('parent_id', 0)->get();
+        foreach ($categories as $category1) {
+            $array[$category1->id] = $category1->title;
+            foreach ($category1->childCategory as $category2) {
+                $array[$category2->id] = '_' . $category2->title;
+                foreach ($category2->childCategory as $category3) {
+                    $array[$category3->id] = '__' . $category3->title;
+                }
+            }
+        }
+        return $array;
+    }
 
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($category) {
+            foreach ($category->childCategory()->get() as $child) {
+                $child->delete();
+            }
+        });
+
+    }
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }
+
