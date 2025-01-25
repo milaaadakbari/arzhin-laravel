@@ -17,45 +17,29 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="text-center align-middle text-primary">ردیف</th>
-                            <th class="text-center align-middle text-primary">عکس</th>
-                            <th class="text-center align-middle text-primary">عنوان مقاله</th>
-                            <th class="text-center align-middle text-primary">نویسنده</th>
-                            <th class="text-center align-middle text-primary">دسته بندی</th>
+                            <th class="text-center align-middle text-primary">نام نقش </th>
                             <th class="text-center align-middle text-primary">ویرایش</th>
                             <th class="text-center align-middle text-primary">حذف</th>
                             <th class="text-center align-middle text-primary">تاریخ ایجاد</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($articles as $index => $article)
+                        @foreach($roles as $index => $role)
                             <tr>
-                                <td class="text-center align-middle">{{$articles->firstItem()+$index}}</td>
+                                <td class="text-center align-middle">{{$roles->firstItem() + $index}}</td>
+                                <td class="text-center align-middle">{{$role->name}}</td>
                                 <td class="text-center align-middle">
-                                    <figure class="avatar avatar">
-                                        <img src="{{url('images/articles/'.$article->image)}}" class="rounded-circle" alt="image">
-                                    </figure>
-                                </td>
-                                <td class="text-center align-middle">{{$article->title}}</td>
-                                <td class="text-center align-middle">{{$article->user->name}}</td>
-                                <td class="text-center align-middle">{{$article->category->title}}</td>
-                                <td class="text-center align-middle">
-                                    <a class="btn btn-outline-info" href="#">
-                                        نقش های کاربر
-                                    </a>
-                                </td>
-                                <td class="text-center align-middle">
-                                    <a class="btn btn-outline-info" href="{{route('articles.edit',$article->id)}}">
+                                    <a class="btn btn-outline-info" href="{{route('roles.edit',$role->id)}}">
                                         ویرایش
                                     </a>
+                                </td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-outline-info" onclick="deleteArticle({{$article->id}})" href="#">
+                                    <a class="btn btn-outline-info" onclick="deleteRole({{$role->id}})" href="#">
                                         حذف
                                     </a>
 
                                 </td>
-
-                                </td>
-                                <td class="text-center align-middle">{{\Hekmatinasser\Verta\Verta::instance($article->created_at)->format('%B %d، %Y')}}</td>
+                                <td class="text-center align-middle">{{\Hekmatinasser\Verta\Verta::instance($role->created_at)->format('%B %d، %Y')}}</td>
                             </tr>
                         @endforeach
 
@@ -63,7 +47,7 @@
                     </table>
                     <div style="margin: 40px !important;"
                          class="pagination pagination-rounded pagination-sm d-flex justify-content-center">
-                        {{$articles->links()}}
+                        {{$roles->links()}}
                     </div>
                 </div>
             </div>
@@ -71,6 +55,7 @@
     </main>
 
 @endsection
+
 @push('scripts')
     <script>
 
@@ -80,7 +65,7 @@
             }
         });
 
-        function deleteArticle($id){
+        function deleteRole($id){
             Swal.fire({
                 title: "آیا از حذف مطمئن هستید",
                 icon: "warning",
@@ -92,12 +77,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/admin/articles/' + $id,
+                        url: 'http://127.0.0.1:8000/admin/roles/' + $id,
                         type: 'DELETE',
                         dataType: 'json',
                         success: function (data) {
                             Swal.fire({
-                                title: "مقاله حذف شد!",
+                                title: "دسته بندی حذف شد!",
                                 text: data.success,
                                 icon: "success"
                             });
@@ -110,4 +95,3 @@
         }
     </script>
 @endpush
-

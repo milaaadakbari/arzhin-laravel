@@ -38,6 +38,13 @@
                     <li><a href="{{route('users.index')}}">لیست کاربران</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="#">نقش ها</a>
+                <ul>
+                    <li><a href="{{route('roles.create')}}">ایجاد نقش</a></li>
+                    <li><a href="{{route('roles.index')}}">لیست نقش ها</a></li>
+                </ul>
+            </li>
         </ul>
         <ul id="blog">
             <li>
@@ -45,6 +52,13 @@
                 <ul>
                     <li><a href="{{route('categories.create')}}">ایجاد دسته بندی</a></li>
                     <li><a href="{{route('categories.index')}}">لیست دسته بندی ها</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">مقاله ها</a>
+                <ul>
+                    <li><a href="{{route('articles.create')}}">ایجاد مقاله</a></li>
+                    <li><a href="{{route('articles.index')}}">لیست مقاله ها</a></li>
                 </ul>
             </li>
         </ul>
