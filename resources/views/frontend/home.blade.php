@@ -90,7 +90,7 @@
                                         <i class="bi bi-play bg-white d-inline-block text-center"></i>
                                     </figcaption>
                                 </figure>
-                                <a href="#">
+                                <a href="{{route('front.article',$article->id)}}">
                                     <h6 class="overflow-hidden px-2">{{$article->title}}</h6>
                                 </a>
                             </div>
@@ -114,10 +114,10 @@
                     <div class="col-sm-6 col-md-6 col-lg-4 my-3">
                         <div class="blg-wrap bg-white pb-3">
                             <figure class="position-relative">
-                                <img src="{{url('images/articles/' .$article->image)}}" alt="{{$article->title}}" alt="" class="w-100">
+                                <img src="{{url('images/articles/' .$article->image)}}" alt="{{$article->title}}"  class="w-100">
                                 <figcaption class="position-absolute w-100 h-100"><span>{{\Hekmatinasser\Verta\Verta::instance($article->created_at)->formatjalaliDate()}}</span></figcaption>
                             </figure>
-                            <a href="#">
+                            <a href="{{route('front.article',$article->id)}}">
                                 <h4 class="blg-title p-3 mx-5 text-dark border-bottom overflow-hidden">{{$article->title}}</h4>
                             </a>
                             <p class="p-4 overflow-hidden">زمانی که چندین سال قبل تصمیم گرفتیم تا قدم در میدان طراحی و برنامه نویسی وب سایت بگذاریم هیچ مسیری برای ما واضح و روشن نبود و باید در جستجوی راه های درست ، روز ها و هفته ها وقت سپری می کردیم </p>

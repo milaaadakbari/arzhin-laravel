@@ -67,4 +67,8 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function comments(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Comment::class);
+    }
 }

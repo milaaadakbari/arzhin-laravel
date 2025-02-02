@@ -27,7 +27,7 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 @foreach($category->childCategory as $child)
-                                                    <li><a class="dropdown-item" href="#">{{$child->title}}</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('front.articles',$child->slug)}}">{{$child->title}}</a></li>
                                                 @endforeach
 
                                             </ul>
@@ -48,8 +48,16 @@
                     </div>
                     <div class="col-md-3 col-4 text-start">
                         <div class="top-account">
-                            <a href="#" class="text-dark"><i class="bi bi-person"></i></a>
-                            <a href="#" class="text-dark"><i class="bi bi-gem"></i></a>
+                            @guest()
+                                <a href="{{route('login')}}" class="text-dark"><i class="bi bi-person"></i></a>
+                            @endguest
+                            @auth()
+                                @if(auth()->user()->roles)
+                                        <a href="{{route('panel')}}" class="text-dark"><i class="bi bi-gem"></i></a>
+                                @endif
+
+                            @endauth
+
                         </div>
                     </div>
                 </div>
